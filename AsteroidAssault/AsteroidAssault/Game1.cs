@@ -19,6 +19,11 @@ namespace AsteroidAssault
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        enum GameStates { TitleScreen, Playing, PlayerDead, GameOver };
+        GameStates gameState = GameStates.TitleScreen;
+        Texture2D titleScreen;
+        Texture2D spriteSheet;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -47,6 +52,8 @@ namespace AsteroidAssault
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            titleScreen = Content.Load<Texture2D>(@"TitleScreen");
+            spriteSheet = Content.Load<Texture2D>(@"spriteSheet");
             // TODO: use this.Content to load your game content here
         }
 
@@ -70,6 +77,21 @@ namespace AsteroidAssault
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            switch (gameState)
+            {
+                case GameStates.TitleScreen:
+                    break;
+
+                case GameStates.Playing:
+                    break;
+
+                case GameStates.PlayerDead:
+                    break;
+
+                case GameStates.GameOver:
+                    break;
+            }
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -84,6 +106,26 @@ namespace AsteroidAssault
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            if (gameState == GameStates.TitleScreen)
+            {
+                spriteBatch.Draw(titleScreen,
+                    new Rectangle(0, 0, this.Window.ClientBounds.Width,
+                        this.Window.ClientBounds.Height),
+                        Color.White);
+            }
+            if ((gameState == GameStates.Playing) ||
+                (gameState == GameStates.PlayerDead) ||
+                (gameState == GameStates.GameOver))
+            {
+            }
+
+            if ((gameState == GameStates.GameOver))
+            {
+            }
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
